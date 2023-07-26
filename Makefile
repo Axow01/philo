@@ -2,7 +2,7 @@
 
 NAME = philo
 
-SRC = src/main.c
+SRC = src/main.c src/parsing.c src/ft_atoi.c
 
 OBJS = $(patsubst src/%.c, bin/%.o, $(SRC))
 
@@ -22,10 +22,10 @@ bin/%.o: src/%.c
 	@$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	@rm -rf bin/
+	@rm -drf bin/
 
 fclean: clean
-	@rm $(NAME)
+	@rm -df $(NAME)
 
 bonus: all
 
