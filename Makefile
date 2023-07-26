@@ -2,13 +2,13 @@
 
 NAME = philo
 
-SRC = src/main.c src/parsing.c src/ft_atoi.c
+SRC = src/main.c src/parsing.c src/ft_atoi.c src/action_philo.c
 
 OBJS = $(patsubst src/%.c, bin/%.o, $(SRC))
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
 
 #---   RULES   ---#
 

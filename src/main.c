@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/26 14:56:47 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:23:52 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,6 @@ int8_t	ft_error(int8_t code)
 	return (code);
 }
 
-void	philo_eat(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->sim->eat);
-	printf("%lld %d IS EATING\n", get_time(), philo->id);
-	usleep(philo->sim->t_eat * 1000);
-	pthread_mutex_unlock(&philo->sim->eat);
-}
-
-void	philo_think(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->sim->think);
-	printf("%lld %d IS THINKING\n", get_time(), philo->id);
-	pthread_mutex_unlock(&philo->sim->think);
-}
-
-void	philo_sleep(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->sim->think);
-	printf("%lld %d IS SLEEPING\n", get_time(), philo->id);
-	usleep(philo->sim->t_sleep * 1000);
-	pthread_mutex_unlock(&philo->sim->think);
-}
-
 void	*init_philo(void *ptr)
 {
 	t_philo	*philo;
@@ -75,7 +52,6 @@ void	*init_philo(void *ptr)
 	philo_sleep(philo);
 	return (NULL);
 }
-
 
 int	main(int argc, char **argv)
 {
@@ -96,7 +72,8 @@ int	main(int argc, char **argv)
 	{
 		sim.philos[i].id = i;
 		sim.philos[i].sim = &sim;
-		pthread_create(&sim.philos[i].philo, NULL, init_philo, &sim.philos[i].philo);
+		pthread_create(&sim.philos[i].philo, NULL, init_philo,
+			&sim.philos[i].philo);
 	}
 	while (1)
 		;

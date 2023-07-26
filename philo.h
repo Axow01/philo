@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:16:21 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/26 14:44:28 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/26 17:27:43 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,17 @@ int8_t	ft_error(int8_t code);
 /// @param nptr The string to convert.
 /// @return The converted int.
 int		ft_atoi(const char *nptr);
+
+/// @brief The philosopher is eating for the ms specified.
+/// @param philo The philosoper's structure.
+void	philo_eat(t_philo *philo);
+
+/// @brief The philosoper is thinking.
+/// @param philo The philosopher's structure.
+void	philo_think(t_philo *philo);
+
+/// @brief The philosoper is sleeping for the ms specified.
+/// @param philo The philosopher's structure.
+void	philo_sleep(t_philo *philo);
 
 #endif
