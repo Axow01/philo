@@ -6,11 +6,21 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:19:27 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/26 14:18:41 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/27 12:31:12 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+int	ft_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i++])
+		;
+	return (i);
+}
 
 static bool	ft_isdigit_str(const char **args, int8_t count)
 {

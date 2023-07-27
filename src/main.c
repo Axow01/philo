@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/26 21:07:29 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:19:01 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,39 @@ int8_t	ft_error(int8_t code)
 	return (code);
 }
 
+void	print_p(char *str, t_philo *philo)
+{
+	pthread_mutex_lock(&philo->sim->death);
+	if (philo->sim->death_philo == 0 || (philo->death_time == -1
+			&& philo->sim->death_philo))
+		printf("%lld %d %s\n", get_time(), philo->id + 1, str);
+	pthread_mutex_unlock(&philo->sim->death);
+}
+
 void	*init_philo(void *ptr)
 {
 	t_philo	*philo;
 
 	philo = ptr;
-	philo->fork.used = 0;
+	pthread_mutex_lock(&philo->sim->death);
 	philo->death_time = get_time() + philo->sim->t_die;
+	pthread_mutex_init(&philo->sim->fork[philo->id].mutex, NULL);
+	pthread_mutex_unlock(&philo->sim->death);
+	while (philo->death_time >= get_time())
+	{
+		philo_eat(philo);
+		print_p("is sleeping", philo);
+		pthread_mutex_lock(&philo->sim->death);
+		usleep(philo->sim->t_sleep * 1000);
+		pthread_mutex_unlock(&philo->sim->death);
+		print_p("is thinking", philo);
+	}
+	philo->death_time = -1;
+	pthread_mutex_lock(&philo->sim->death);
+	philo->sim->death_philo += 1;
+	pthread_mutex_unlock(&philo->sim->death);
+	if (philo->death_time == -1)
+		print_p("is dead", philo);
 	return (NULL);
 }
 
@@ -63,16 +89,20 @@ int	main(int argc, char **argv)
 	if (!ft_parsing(&sim, (const char **)argv, argc))
 		return (ft_error(11));
 	sim.philos = malloc(sim.nb_philo * sizeof(t_philo));
-	pthread_mutex_init(&sim.think, NULL);
+	sim.fork = malloc(sim.nb_philo * sizeof(t_fork));
+	sim.death_philo = 0;
 	pthread_mutex_init(&sim.eat, NULL);
-	pthread_mutex_init(&sim.sleep, NULL);
+	pthread_mutex_init(&sim.death, NULL);
 	while (++i < sim.nb_philo)
 	{
 		sim.philos[i].id = i;
 		sim.philos[i].sim = &sim;
-		pthread_create(&sim.philos[i].philo, NULL, init_philo,
+		pthread_create(&sim.philos[i].philo, NULL, &init_philo,
 			&sim.philos[i]);
 	}
-	usleep(2000 * 1000);
+	i = -1;
+	while (++i < sim.nb_philo)
+		if (pthread_join(sim.philos[i].philo, NULL) != 0)
+			break ;
 	return (0);
 }

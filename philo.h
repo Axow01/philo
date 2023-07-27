@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:16:21 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/26 20:57:20 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:02:24 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef long long	t_time;
 typedef struct s_fork
 {
 	int				used;
-	pthread_mutex_t	mutext;
+	pthread_mutex_t	mutex;
 }		t_fork;
 
 typedef struct s_philo
@@ -36,18 +36,18 @@ typedef struct s_philo
 	pthread_t			philo;
 	int8_t				id;
 	t_time				death_time;
-	t_fork				fork;
 	struct s_simulation	*sim;
 }		t_philo;
 
 typedef struct s_simulation
 {
 	t_philo			*philos;
+	t_fork			*fork;
 	pthread_mutex_t	eat;
-	pthread_mutex_t	sleep;
-	pthread_mutex_t	think;
+	pthread_mutex_t	death;
 	int				nb_philo;
 	int				nb_each_eat;
+	int				death_philo;
 	t_time			t_die;
 	t_time			t_eat;
 	t_time			t_sleep;
@@ -78,12 +78,14 @@ int		ft_atoi(const char *nptr);
 /// @param philo The philosoper's structure.
 void	philo_eat(t_philo *philo);
 
-/// @brief The philosoper is thinking.
-/// @param philo The philosopher's structure.
-void	philo_think(t_philo *philo);
+/// @brief Un fucking strlen men.
+/// @param str un string genre.
+/// @return guess by yourself.
+int		ft_strlen(char *str);
 
-/// @brief The philosoper is sleeping for the ms specified.
-/// @param philo The philosopher's structure.
-void	philo_sleep(t_philo *philo);
+/// @brief Prints for the philos actions.
+/// @param str the action to print
+/// @param philo the philo's stucture. 
+void	print_p(char *str, t_philo *philo);
 
 #endif
