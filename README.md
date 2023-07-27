@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is an introduction to multithreading and parallel computing. The goal is to solve the dining philosophers problem.
+This project is an introduction to multithreading and parallel computing. The goal is to solve the dining philosophers problem. oh noo
 
 ## Build
 
