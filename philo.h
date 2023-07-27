@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:16:21 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/27 14:59:26 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:33:14 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ typedef struct s_philo
 	pthread_t			philo;
 	int8_t				id;
 	t_time				death_time;
+	int					time_eaten;
 	struct s_simulation	*sim;
 }		t_philo;
 
 typedef struct s_simulation
 {
 	t_philo			*philos;
-	t_fork			*fork;
+	pthread_mutex_t	*fork;
 	pthread_mutex_t	eat;
 	pthread_mutex_t	death;
 	int				nb_philo;
