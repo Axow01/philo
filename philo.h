@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:16:21 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/27 14:02:24 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:59:26 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		ft_atoi(const char *nptr);
 
 /// @brief The philosopher is eating for the ms specified.
 /// @param philo The philosoper's structure.
-void	philo_eat(t_philo *philo);
+bool	philo_eat(t_philo *philo);
 
 /// @brief Un fucking strlen men.
 /// @param str un string genre.
@@ -86,6 +86,6 @@ int		ft_strlen(char *str);
 /// @brief Prints for the philos actions.
 /// @param str the action to print
 /// @param philo the philo's stucture. 
-void	print_p(char *str, t_philo *philo);
+bool	print_p(char *str, t_philo *philo);
 
 #endif

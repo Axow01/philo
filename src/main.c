@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/27 14:19:01 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:59:49 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,18 @@ int8_t	ft_error(int8_t code)
 	return (code);
 }
 
-void	print_p(char *str, t_philo *philo)
+bool	print_p(char *str, t_philo *philo)
 {
 	pthread_mutex_lock(&philo->sim->death);
 	if (philo->sim->death_philo == 0 || (philo->death_time == -1
 			&& philo->sim->death_philo))
+	{
 		printf("%lld %d %s\n", get_time(), philo->id + 1, str);
+		pthread_mutex_unlock(&philo->sim->death);
+		return (true);
+	}
 	pthread_mutex_unlock(&philo->sim->death);
+	return (false);
 }
 
 void	*init_philo(void *ptr)
@@ -61,19 +66,23 @@ void	*init_philo(void *ptr)
 	pthread_mutex_unlock(&philo->sim->death);
 	while (philo->death_time >= get_time())
 	{
-		philo_eat(philo);
-		print_p("is sleeping", philo);
+		if (!print_p("is thinking", philo))
+			return (NULL);
+		if (!philo_eat(philo))
+			return (NULL);
+		if (!print_p("is sleeping", philo))
+			return (NULL);
 		pthread_mutex_lock(&philo->sim->death);
 		usleep(philo->sim->t_sleep * 1000);
 		pthread_mutex_unlock(&philo->sim->death);
-		print_p("is thinking", philo);
 	}
 	philo->death_time = -1;
 	pthread_mutex_lock(&philo->sim->death);
 	philo->sim->death_philo += 1;
 	pthread_mutex_unlock(&philo->sim->death);
 	if (philo->death_time == -1)
-		print_p("is dead", philo);
+		if (print_p("is dead", philo))
+			return (NULL);
 	return (NULL);
 }
 
