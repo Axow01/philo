@@ -8,11 +8,20 @@ OBJS = $(patsubst src/%.c, bin/%.o, $(SRC))
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=thread
+
+#---   COLORS   ---#
+
+RED = \033[31m
+BLUE = \033[36m
+GREEN = \033[32m
+YELLOW = \033[33m
+BOLD = \033[1m
+RESET = \033[0m
 
 #---   RULES   ---#
 
-all: $(NAME) logo
+all: warning $(NAME) logo
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
@@ -30,6 +39,9 @@ fclean: clean
 bonus: all
 
 re: fclean all
+
+warning:
+	@echo "$(BOLD)$(YELLOW)WARNING$(RESET)\n$(RED)Debug flag are actives !!! (remove before push)$(RESET)\n\n"
 
 logo:
 	@echo "\033[32;1m--- BUILD COMPLETE ---"

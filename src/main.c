@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/26 17:23:52 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/26 21:07:29 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ void	*init_philo(void *ptr)
 
 	philo = ptr;
 	philo->fork.used = 0;
-	philo_think(philo);
-	philo_eat(philo);
-	philo_sleep(philo);
+	philo->death_time = get_time() + philo->sim->t_die;
 	return (NULL);
 }
 
@@ -73,9 +71,8 @@ int	main(int argc, char **argv)
 		sim.philos[i].id = i;
 		sim.philos[i].sim = &sim;
 		pthread_create(&sim.philos[i].philo, NULL, init_philo,
-			&sim.philos[i].philo);
+			&sim.philos[i]);
 	}
-	while (1)
-		;
+	usleep(2000 * 1000);
 	return (0);
 }
