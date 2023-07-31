@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:16:21 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/27 18:33:14 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/31 13:03:15 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	pthread_t			philo;
-	int8_t				id;
+	int					id;
 	t_time				death_time;
 	int					time_eaten;
 	struct s_simulation	*sim;
@@ -52,6 +52,7 @@ typedef struct s_simulation
 	t_time			t_die;
 	t_time			t_eat;
 	t_time			t_sleep;
+	bool			complete;
 }		t_simulation;
 
 /// @brief Calculate the time of the program.
@@ -88,5 +89,10 @@ int		ft_strlen(char *str);
 /// @param str the action to print
 /// @param philo the philo's stucture. 
 bool	print_p(char *str, t_philo *philo);
+
+/// @brief This function handle the death of a philosopher.
+/// @param philo The philosopher's structure.
+/// @return True if the philo is death and false if not.
+bool	philo_death(t_philo *philo);
 
 #endif
