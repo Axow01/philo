@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/31 14:15:51 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/31 17:12:50 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int8_t	ft_error(int8_t code)
 
 bool	print_p(char *str, t_philo *philo)
 {
-	philo_death(philo);
+	if (is_death(philo) || sim_death(philo->sim))
+		return (true);
 	pthread_mutex_lock(&philo->sim->death);
 	if (philo->sim->death_philo == 0)
 	{
@@ -52,35 +53,29 @@ bool	print_p(char *str, t_philo *philo)
 		return (false);
 	}
 	pthread_mutex_unlock(&philo->sim->death);
-	return (philo_death(philo));
+	return (true);
 }
 
 void	*init_philo(void *ptr)
 {
 	t_philo	*philo;
-	int		i;
 
 	philo = ptr;
 	if (philo->id % 2 == 0)
-		usleep((philo->sim->t_eat * 1000) / 2);
-	philo->time_eaten = 0;
+		usleep(philo->sim->t_eat * 1000 / 2);
 	philo->death_time = get_time() + philo->sim->t_die;
-	while (philo->death_time >= get_time())
+	while (1)
 	{
-		if (philo->sim->nb_philo == 1 || (philo->sim->t_die <= philo->sim->t_eat || philo->sim->t_die <= philo->sim->t_sleep))
-			break ;
-		if (philo_eat(philo))
-			return (NULL);
-		if (print_p("is sleeping", philo))
-			return (NULL);
-		i = get_time();
-		while (get_time() - i < philo->sim->t_sleep)
-			usleep(1000);
+		if (philo->sim->nb_philo == 1)
+			while (!is_death(philo))
+				usleep(1000);
 		if (print_p("is thinking", philo))
-			return (NULL);
+			break;
+		if (!philo_eat(philo))
+			break;
+		if (!philo_sleep(philo))
+			break;
 	}
-	while (!philo_death(philo))
-		usleep(500);
 	return (NULL);
 }
 
@@ -94,9 +89,14 @@ int	main(int argc, char **argv)
 	i = -1;
 	if (!ft_parsing(&sim, (const char **)argv, argc))
 		return (ft_error(11));
+	if (!prepare_philo(&sim))
+		return (ft_error(12));
+	sim.death_philo = 0;
 	while (++i < sim.nb_philo)
-		if (pthread_join(sim.philos[i].philo, NULL) != 0)
-			break ;
+		pthread_create(&sim.philos[i].philo, NULL, &init_philo, &sim.philos[i]);
+	i = -1;
+	while (++i < sim.nb_philo)
+		pthread_join(sim.philos[i].philo, NULL);
 	free(sim.philos);
 	free(sim.fork);
 	return (0);

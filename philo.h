@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:16:21 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/31 13:03:15 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/31 16:52:42 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,26 @@ int		ft_strlen(char *str);
 /// @param philo the philo's stucture. 
 bool	print_p(char *str, t_philo *philo);
 
-/// @brief This function handle the death of a philosopher.
+/// @brief Make the philosopher sleep.
 /// @param philo The philosopher's structure.
-/// @return True if the philo is death and false if not.
-bool	philo_death(t_philo *philo);
+/// @return True if it's okay false if it's not.
+bool	philo_sleep(t_philo *philo);
+
+/// @brief Check if the philo is death.
+/// @param philo The philosopher's structure.
+/// @return	returns true if death false if not. 
+bool	is_death(t_philo *philo);
+
+/// @brief Check if any of the philosophers are death.
+/// @param sim The simulation's structure.
+/// @return true if one is death.
+bool	sim_death(t_simulation *sim);
+
+/// @brief This prepares the philos
+/// @param sim simulation struct.
+/// @return you can guess
+bool	prepare_philo(t_simulation *sim);
+
+void	ft_wait(t_time duration);
 
 #endif

@@ -6,11 +6,20 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 13:34:46 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/27 12:34:05 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/31 17:00:37 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+void	ft_wait(t_time duration)
+{
+	t_time	new;
+
+	new = get_time() + duration;
+	while (new > get_time())
+		usleep(1000);
+}
 
 int	ft_atoi(const char *nptr)
 {
