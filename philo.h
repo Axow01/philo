@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:16:21 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/31 16:52:42 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/31 21:21:42 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ typedef struct s_philo
 	int					id;
 	t_time				death_time;
 	int					time_eaten;
+	pthread_mutex_t		*fork_left;
+	pthread_mutex_t		*fork_right;
 	struct s_simulation	*sim;
 }		t_philo;
 

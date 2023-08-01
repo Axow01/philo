@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/31 17:12:50 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/07/31 21:16:42 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,16 @@ void	*init_philo(void *ptr)
 	t_philo	*philo;
 
 	philo = ptr;
+	while (!philo->sim->complete)
+		usleep(100);
 	if (philo->id % 2 == 0)
 		usleep(philo->sim->t_eat * 1000 / 2);
 	philo->death_time = get_time() + philo->sim->t_die;
+	if (philo->sim->nb_philo == 1)
+		while (!is_death(philo))
+			usleep(1000);
 	while (1)
 	{
-		if (philo->sim->nb_philo == 1)
-			while (!is_death(philo))
-				usleep(1000);
 		if (print_p("is thinking", philo))
 			break;
 		if (!philo_eat(philo))
@@ -92,9 +94,11 @@ int	main(int argc, char **argv)
 	if (!prepare_philo(&sim))
 		return (ft_error(12));
 	sim.death_philo = 0;
+	sim.complete = false;
 	while (++i < sim.nb_philo)
 		pthread_create(&sim.philos[i].philo, NULL, &init_philo, &sim.philos[i]);
 	i = -1;
+	sim.complete = true;
 	while (++i < sim.nb_philo)
 		pthread_join(sim.philos[i].philo, NULL);
 	free(sim.philos);
