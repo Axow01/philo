@@ -21,10 +21,11 @@ RESET = \033[0m
 
 #---   RULES   ---#
 
-all: warning $(NAME) logo
+all: $(NAME) logo
 
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+	@echo "$(BOLD)$(YELLOW)Compilation done$(RESET)\n"
 
 bin/%.o: src/%.c
 	@mkdir -p bin/
@@ -32,16 +33,18 @@ bin/%.o: src/%.c
 
 clean:
 	@rm -drf bin/
+	@echo "$(BOLD)$(YELLOW)clean complete$(RESET)\n"
 
 fclean: clean
 	@rm -df $(NAME)
+	@echo "$(BOLD)$(YELLOW)fclean complete$(RESET)\n"
 
 bonus: all
 
 re: fclean all
 
-warning:
-	@echo "$(BOLD)$(YELLOW)WARNING$(RESET)\n$(RED)Debug flag are actives !!! (remove before push)$(RESET)\n\n"
+# warning:
+# 	@echo "$(BOLD)$(YELLOW)WARNING$(RESET)\n$(RED)Debug flag are actives !!! (remove before push)$(RESET)\n\n"
 
 logo:
 	@echo "\033[32;1m--- BUILD COMPLETE ---"
