@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 17:22:58 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/31 21:41:36by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:48:04 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ bool	philo_sleep(t_philo *philo)
 
 bool	philo_eat(t_philo *philo)
 {
-	if (is_death(philo) || get_time() + philo->sim->t_eat >= get_time() + philo->sim->t_die)
+	if (is_death(philo) || get_time() + philo->sim->t_eat 
+		>= get_time() + philo->sim->t_die)
 		return (false);
 	pthread_mutex_lock(philo->fork_right);
 	print_p("has taken a fork", philo);

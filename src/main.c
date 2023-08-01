@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/31 21:16:42 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:47:24 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,11 @@ void	*init_philo(void *ptr)
 	while (1)
 	{
 		if (print_p("is thinking", philo))
-			break;
+			break ;
 		if (!philo_eat(philo))
-			break;
+			break ;
 		if (!philo_sleep(philo))
-			break;
+			break ;
 	}
 	return (NULL);
 }
