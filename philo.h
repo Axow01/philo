@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:16:21 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/08/02 12:33:10 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/02 15:49:59 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_simulation
 	int				nb_philo;
 	int				nb_each_eat;
 	int				death_philo;
+	int8_t			*fork_status;
 	t_time			t_die;
 	t_time			t_eat;
 	t_time			t_sleep;
@@ -117,5 +118,16 @@ void	ft_wait(t_time duration);
 /// @brief Destroy all the mutexs.
 /// @param sim The simulation's structure.
 void	ft_destroy_all_mutex(t_simulation *sim);
+
+/// @brief Check if the fork are available.
+/// @param philo The philosopher's structure.
+/// @param forks The forks_status array.
+/// @return True if available false if not.
+bool	ft_check_forks(t_philo *philo, int8_t *forks);
+
+/// @brief Change the status of the forks
+/// @param philo 
+/// @param status 
+void	change_status_fork(t_philo *philo, int8_t status);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/08/02 12:34:08 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/02 16:39:51 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,19 @@ void	*init_philo(void *ptr)
 	{
 		if (print_p("is thinking", philo))
 			break ;
+		ft_wait(1);
 		if (!philo_eat(philo))
-			break ;
+		{
+			while (!is_death(philo) && !ft_check_forks(philo, philo->sim->fork_status))
+				usleep(200);
+			if (is_death(philo) || !philo_eat(philo))
+				break ;
+		}
 		if (!philo_sleep(philo))
 			break ;
 	}
+	while (!is_death(philo))
+		usleep(1000);
 	return (NULL);
 }
 

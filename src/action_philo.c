@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 17:22:58 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/08/01 11:48:04 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/02 16:15:21 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ bool	prepare_philo(t_simulation *sim)
 
 	sim->fork = malloc(sim->nb_philo * sizeof(t_fork));
 	sim->philos = malloc(sim->nb_philo * sizeof(t_philo));
+	sim->fork_status = malloc(sim->nb_each_eat * sizeof(int8_t));
 	if (!sim->fork || !sim->philos)
 		return (false);
 	pthread_mutex_init(&sim->eat, NULL);
@@ -26,6 +27,7 @@ bool	prepare_philo(t_simulation *sim)
 	i = -1;
 	while (++i < sim->nb_philo)
 	{
+		sim->fork_status[i] = 0;
 		sim->philos[i].id = i;
 		sim->philos[i].time_eaten = 0;
 		sim->philos[i].sim = sim;
@@ -78,9 +80,9 @@ bool	philo_sleep(t_philo *philo)
 
 bool	philo_eat(t_philo *philo)
 {
-	if (is_death(philo) || get_time() + philo->sim->t_eat 
-		>= get_time() + philo->sim->t_die)
+	if (is_death(philo) || !ft_check_forks(philo, philo->sim->fork_status))
 		return (false);
+	change_status_fork(philo, 1);
 	pthread_mutex_lock(philo->fork_right);
 	print_p("has taken a fork", philo);
 	pthread_mutex_lock(philo->fork_left);
@@ -88,11 +90,13 @@ bool	philo_eat(t_philo *philo)
 	philo->death_time = get_time() + philo->sim->t_die;
 	if (print_p("is eating", philo))
 	{
+		change_status_fork(philo, 0);
 		pthread_mutex_unlock(philo->fork_right);
 		pthread_mutex_unlock(philo->fork_left);
 		return (false);
 	}
 	ft_wait(philo->sim->t_eat);
+	change_status_fork(philo, 0);
 	pthread_mutex_unlock(philo->fork_right);
 	pthread_mutex_unlock(philo->fork_left);
 	if (philo->sim->nb_each_eat)
