@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/08/02 17:00:18 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:11:28 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	*init_philo(void *ptr)
 		ft_wait(1);
 		if (!philo_eat(philo))
 		{
-			while (!is_death(philo) && !ft_check_forks(philo, philo->sim->fork_status))
+			while (!is_death(philo) 
+				&& !ft_check_forks(philo, philo->sim->fork_status))
 				usleep(200);
 			if (is_death(philo) || !philo_eat(philo))
 				break ;
