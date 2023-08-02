@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:16:21 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/31 21:21:42 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/02 12:33:10 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,9 @@ bool	sim_death(t_simulation *sim);
 bool	prepare_philo(t_simulation *sim);
 
 void	ft_wait(t_time duration);
+
+/// @brief Destroy all the mutexs.
+/// @param sim The simulation's structure.
+void	ft_destroy_all_mutex(t_simulation *sim);
 
 #endif

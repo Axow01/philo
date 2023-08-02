@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/08/01 11:47:24 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/02 12:34:08 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	main(int argc, char **argv)
 	sim.complete = true;
 	while (++i < sim.nb_philo)
 		pthread_join(sim.philos[i].philo, NULL);
+	ft_destroy_all_mutex(&sim);
 	free(sim.philos);
 	free(sim.fork);
 	return (0);

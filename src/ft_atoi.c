@@ -6,11 +6,22 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 13:34:46 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/08/01 11:39:35 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/02 12:32:30 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+void	ft_destroy_all_mutex(t_simulation *sim)
+{
+	int	i;
+
+	i = -1;
+	pthread_mutex_destroy(&sim->eat);
+	pthread_mutex_destroy(&sim->death);
+	while (++i < sim->nb_philo)
+		pthread_mutex_destroy(&sim->fork[i]);
+}
 
 void	ft_wait(t_time duration)
 {
