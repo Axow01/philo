@@ -8,7 +8,7 @@ OBJS = $(patsubst src/%.c, bin/%.o, $(SRC))
 
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -O2 #-g -fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror -O2 # -g -fsanitize=thread
 
 #---   COLORS   ---#
 

@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/08/02 16:39:51 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:00:18 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,7 @@ void	*init_philo(void *ptr)
 	if (philo->id % 2 == 0)
 		usleep(philo->sim->t_eat * 1000 / 2);
 	philo->death_time = get_time() + philo->sim->t_die;
-	if (philo->sim->nb_philo == 1)
-		while (!is_death(philo))
-			usleep(1000);
-	while (1)
+	while (philo->sim->nb_philo != 1)
 	{
 		if (print_p("is thinking", philo))
 			break ;
