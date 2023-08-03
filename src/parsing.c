@@ -6,11 +6,25 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 12:19:27 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/07/27 12:31:12 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:58:56 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
+
+void	ft_unlock_eat_mutex(t_philo *philo)
+{
+	change_status_fork(philo, 0);
+	pthread_mutex_unlock(philo->fork_right);
+	pthread_mutex_unlock(philo->fork_left);
+}
+
+void	ft_norm(t_philo *philo)
+{
+	while (!is_death(philo) 
+		&& !ft_check_forks(philo, philo->sim->fork_status))
+		usleep(200);
+}
 
 int	ft_strlen(char *str)
 {

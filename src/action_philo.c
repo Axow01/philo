@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 17:22:58 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/08/02 16:15:21 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:59:53 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,7 @@ bool	philo_eat(t_philo *philo)
 	philo->death_time = get_time() + philo->sim->t_die;
 	if (print_p("is eating", philo))
 	{
-		change_status_fork(philo, 0);
-		pthread_mutex_unlock(philo->fork_right);
-		pthread_mutex_unlock(philo->fork_left);
+		ft_unlock_eat_mutex(philo);
 		return (false);
 	}
 	ft_wait(philo->sim->t_eat);

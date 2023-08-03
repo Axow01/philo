@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:16:21 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/08/02 15:49:59 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:59:33 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,13 @@ bool	ft_check_forks(t_philo *philo, int8_t *forks);
 /// @param philo 
 /// @param status 
 void	change_status_fork(t_philo *philo, int8_t status);
+
+/// @brief fuck norm.
+/// @param philo 
+void	ft_norm(t_philo *philo);
+
+/// @brief Fucking norm.
+/// @param philo 
+void	ft_unlock_eat_mutex(t_philo *philo);
 
 #endif
