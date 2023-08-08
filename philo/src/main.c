@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 18:10:13 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/08/03 14:55:56 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:22:05 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,13 @@ void	*init_philo(void *ptr)
 		if (!philo_eat(philo))
 		{
 			ft_norm(philo);
-			if (is_death(philo) || !philo_eat(philo))
+			if (philo->time_eaten == -1 || is_death(philo) || !philo_eat(philo))
 				break ;
 		}
 		if (!philo_sleep(philo))
 			break ;
 	}
-	while (!is_death(philo))
+	while (!is_death(philo) && philo->time_eaten != -1)
 		usleep(1000);
 	return (NULL);
 }
@@ -108,5 +108,6 @@ int	main(int argc, char **argv)
 	ft_destroy_all_mutex(&sim);
 	free(sim.philos);
 	free(sim.fork);
+	free(sim.fork_status);
 	return (0);
 }
